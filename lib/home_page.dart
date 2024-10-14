@@ -19,6 +19,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     if (myBox.get("TODOLIST") == null) {
       db.createInitialData();
+    } else {
+      db.loadData();
     }
     super.initState();
   }
@@ -29,14 +31,18 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       db.todoList[index][1] = !db.todoList[index][1];
     });
+    db.updateDataBase();
   }
 
   void saveNewTask() {
-    setState(() {
-      db.todoList.add([_controller.text, false]);
-      _controller.clear();
-    });
-    Navigator.of(context).pop();
+    if (_controller.text.trim().isNotEmpty) {
+      setState(() {
+        db.todoList.add([_controller.text, false]);
+        _controller.clear();
+      });
+      Navigator.of(context).pop();
+      db.updateDataBase();
+    }
   }
 
   void createNewTask() {
@@ -56,6 +62,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       db.todoList.removeAt(index);
     });
+    db.updateDataBase();
   }
 
   @override

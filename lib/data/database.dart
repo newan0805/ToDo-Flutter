@@ -13,7 +13,7 @@ class ToDoDataBase {
   }
 
   void loadData() {
-    todoList = _myBox.get("TODOLIST");
+    todoList = _myBox.get("TODOLIST", defaultValue: []);
   }
 
   void updateDataBase() {
